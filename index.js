@@ -3,6 +3,21 @@ console.log("Starting...");
 require('dotenv').config();
 const fetch = require('node-fetch');
 
+const http = require('http');
+
+const hostname = '0.0.0.0';
+const port = process.env.PORT;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -37,7 +52,7 @@ async function msgRecieved(msg) {
         // msg.reply("I am here!");
         const i = Math.floor(Math.random() * reply.length);
         msg.channel.send(reply[i]);
-    } else if (tokens[0].toLowerCase() === "gifairy" || tokens[0].toLowerCase() === "gf") {
+    } else if (tokens[0].toLowerCase() === "gifairy" || tokens[0].toLowerCase() === "gfy" || tokens[0].toLowerCase() === "gf") {
 
         let tags = "random";
         msg.channel.send("Here is your GIF!");
