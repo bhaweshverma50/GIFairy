@@ -37,7 +37,7 @@ async function msgRecieved(msg) {
         // msg.reply("I am here!");
         const i = Math.floor(Math.random() * reply.length);
         msg.channel.send(reply[i]);
-    } else if (tokens[0].toLowerCase() === "gifairy" || tokens[0].toLowerCase() === "gfy") {
+    } else if (tokens[0].toLowerCase() === "gifairy" || tokens[0].toLowerCase() === "gf") {
 
         let tags = "random";
         msg.channel.send("Here is your GIF!");
