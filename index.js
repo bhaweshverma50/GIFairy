@@ -1,5 +1,6 @@
 // Seting up custom port for hosting purpose (Solved Heroku Can't connect to port 60, i.e. default port provided by Heroku)
 const http = require('http');
+require('dotenv').config();
 const hostname = '0.0.0.0';
 const port = process.env.PORT;
 
@@ -18,7 +19,6 @@ server.listen(port, hostname, () => {
 // Discord Connection Establishment
 console.log("Starting...");
 
-require('dotenv').config();
 const fetch = require('node-fetch');
 
 const Discord = require('discord.js');
