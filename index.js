@@ -1,22 +1,25 @@
+// // Seting up custom port for hosting purpose (Solved Heroku Can't connect to port 60, i.e. default port provided by Heroku)
+// const http = require('http');
+// const hostname = '0.0.0.0';
+// const port = process.env.PORT;
+
+// const server = http.createServer((req, res) => {
+//     res.statusCode = 200;
+//     res.setHeader('Content-Type', 'text/plain');
+//     res.end('Hello World');
+// });
+
+// server.listen(port, hostname, () => {
+//     console.log(`Server running at http://${hostname}:${port}/`);
+// });
+// // ****** Port setup END ******
+
+
+// Discord Connection Establishment
 console.log("Starting...");
 
 require('dotenv').config();
 const fetch = require('node-fetch');
-
-const http = require('http');
-
-const hostname = '0.0.0.0';
-const port = process.env.PORT;
-
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
-});
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -24,14 +27,19 @@ const client = new Discord.Client();
 client.login(process.env.TOKEN);
 
 client.on('ready', startBot);
-client.on('message', msgRecieved);
-
 
 function startBot() {
     console.log("Connected Successfully!");
 }
+// ****** Connection Est. END ******
+
+
+// Listening for every message on the server and replying with appropriate result (listening to every text channel)
+client.on('message', msgRecieved);
 
 async function msgRecieved(msg) {
+
+    console.log(msg.content);
 
     const reply = [
         "What can I do for you <@" + msg.author.id + ">?",
@@ -44,21 +52,19 @@ async function msgRecieved(msg) {
         "kya hai <@" + msg.author.id + ">?"
     ]
 
-    console.log(msg.content);
+    let command = msg.content.split(" ");   //splits the text message from the place where there is " ", i.e. space and stores as array
 
-    let tokens = msg.content.split(" ");
-
-    if (tokens[0].toLowerCase() === "fairy" || tokens[0].toLowerCase() === "fy") {
+    if (command[0].toLowerCase() === "fairy" || command[0].toLowerCase() === "fy") {
         // msg.reply("I am here!");
         const i = Math.floor(Math.random() * reply.length);
         msg.channel.send(reply[i]);
-    } else if (tokens[0].toLowerCase() === "gifairy" || tokens[0].toLowerCase() === "gfy" || tokens[0].toLowerCase() === "gf") {
+    } else if (command[0].toLowerCase() === "gifairy" || command[0].toLowerCase() === "gfy" || command[0].toLowerCase() === "gf") {
 
         let tags = "cute";
         msg.channel.send("Here is your GIF!");
 
-        if (tokens.length > 1) {
-            tags = tokens.slice(1, tokens.length).join(" ");
+        if (command.length > 1) {
+            tags = command.slice(1, command.length).join(" ");
         }
 
         let url = `https://api.tenor.com/v1/search?q=${tags}&key=${process.env.TENOR}&limit=5`;
@@ -69,5 +75,16 @@ async function msgRecieved(msg) {
         const i = Math.floor(Math.random() * json.results.length);
         msg.channel.send(json.results[i].url);
 
+    } else if (command[0] === "gfav") {
+        const user = msg.mentions.users.first() || msg.author;
+        console.log(user);
+        const avatarEmbed = new Discord.MessageEmbed()
+            .setColor("#D31C1F")
+            .setAuthor(user.username + "'s Avatar")
+            .setTimestamp()
+            .setFooter("Requested By: " + user.username, msg.author.displayAvatarURL())
+            .setImage(user.displayAvatarURL({ dynamic: true, size: 256 }));
+        msg.channel.send(avatarEmbed);
     }
 }
+// ****** Listening ENDS ******
