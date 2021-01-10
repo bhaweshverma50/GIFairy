@@ -1,18 +1,18 @@
-// // Seting up custom port for hosting purpose (Solved Heroku Can't connect to port 60, i.e. default port provided by Heroku)
-// const http = require('http');
-// const hostname = '0.0.0.0';
-// const port = process.env.PORT;
+// Seting up custom port for hosting purpose (Solved Heroku Can't connect to port 60, i.e. default port provided by Heroku)
+const http = require('http');
+const hostname = '0.0.0.0';
+const port = process.env.PORT;
 
-// const server = http.createServer((req, res) => {
-//     res.statusCode = 200;
-//     res.setHeader('Content-Type', 'text/plain');
-//     res.end('Hello World');
-// });
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World');
+});
 
-// server.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
-// // ****** Port setup END ******
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+// ****** Port setup END ******
 
 
 // Discord Connection Establishment
