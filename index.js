@@ -91,10 +91,9 @@ async function msgRecieved(msg) {
         msg.channel.send("clear command activated!");
 
         if (command.length > 1) {
-            args = command.slice(1, command.length).join(" ");
+            args = command.slice(1, 2);
             console.log(args);
         }
-
     }
 
 }
