@@ -88,11 +88,21 @@ async function msgRecieved(msg) {
     } else if (command[0].toLowerCase() === "gfcl" || command[0].toLowerCase() === "gfclr") {
 
         let args = 1;
-        msg.channel.send("clear command activated!");
+        // msg.channel.send("clear command activated!");
 
-        if (command.length > 1) {
-            args = command.slice(1, 2);
-            console.log(args);
+        if (command.length <= 1 || command.length > 2) {
+            msg.channel.send("Invalid <args>! Please enter single integer after the prefix")
+        } else {
+            args = command.slice(1, command.length).join(" ");
+            if (isNaN(args)) {
+                msg.channel.send("Invalid <args>! Please enter single integer after the prefix")
+            } else if (args > 100) {
+                msg.channel.send("Can't clear more than 100 messages! Enter a number <= 100")
+            } else {
+                await msg.channel.messages.fetch({ limit: args }).then(messages => {
+                    msg.channel.bulkDelete(messages)
+                });
+            }
         }
     }
 
