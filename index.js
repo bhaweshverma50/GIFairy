@@ -99,7 +99,7 @@ async function msgRecieved(msg) {
             } else if (args > 100) {
                 msg.channel.send("Can't clear more than 100 messages! Enter a number <= 100")
             } else {
-                await msg.channel.messages.fetch({ limit: args }).then(messages => {
+                msg.channel.messages.fetch({ limit: args }).then(messages => {
                     msg.channel.bulkDelete(messages)
                 });
             }
