@@ -85,6 +85,17 @@ async function msgRecieved(msg) {
             .setFooter("Requested By: " + user.username, msg.author.displayAvatarURL())
             .setImage(user.displayAvatarURL({ dynamic: true, size: 256 }));
         msg.channel.send(avatarEmbed);
+    } else if (command[0].toLowerCase() === "gfcl" || command[0].toLowerCase() === "gfclr") {
+
+        let args = 1;
+        msg.channel.send("clear command activated!");
+
+        if (command.length > 1) {
+            args = command.slice(1, command.length).join(" ");
+            console.log(args);
+        }
+
     }
+
 }
 // ****** Listening ENDS ******
