@@ -45,11 +45,7 @@ async function msgRecieved(msg) {
         "What can I do for you <@" + msg.author.id + ">?",
         "How can I help you <@" + msg.author.id + ">?",
         "<@" + msg.author.id + ">, you summoned me?",
-        "I am here <@" + msg.author.id + ">",
-        "Mele ko apne bulaya <@" + msg.author.id + ">?",
-        "Aapne hume yaad kiya <@" + msg.author.id + ">?",
-        "Han boliye <@" + msg.author.id + ">, kya takleef hai aapko?",
-        "kya hai <@" + msg.author.id + ">?"
+        "I am here <@" + msg.author.id + ">"
     ]
 
     let command = msg.content.split(" ");   //splits the text message from the place where there is " ", i.e. space and stores as array
@@ -75,7 +71,7 @@ async function msgRecieved(msg) {
         const i = Math.floor(Math.random() * json.results.length);
         msg.channel.send(json.results[i].url);
 
-    } else if (command[0] === "gfav") {
+    } else if (command[0].toLowerCase() === "gfav") {
         const user = msg.mentions.users.first() || msg.author;
         console.log(user);
         const avatarEmbed = new Discord.MessageEmbed()
