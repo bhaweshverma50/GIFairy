@@ -33,7 +33,7 @@ async function msgRecieved(msg) {
     const args = msg.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    console.log(command);
-    // console.log(args);
+    // console.log(command);
+    console.log(args);
 
 }
