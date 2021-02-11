@@ -55,7 +55,7 @@ bot.on('message', msg => {
     } catch (e) {
         const error = new Discord.MessageEmbed()
             .setColor('#D31C1F')
-            .setTitle('Oops!')
+            .setTitle('Error!')
             .setDescription(`\`${msg.content}\` is not a valid command`)
         msg.channel.send(error)
     }
