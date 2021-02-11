@@ -2,7 +2,7 @@ const http = require('http');
 require('dotenv').config();
 const hostname = '0.0.0.0';
 const port = process.env.PORT;
-const prefix = process.env.prefix;
+const prefix = process.env.PREFIX;
 
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
@@ -54,7 +54,7 @@ bot.on('message', msg => {
         cmd.execute(bot, msg, args, Discord);
     } catch (e) {
         // console.log(e);
-        msg.cahnnel.send('there was an error! :(')
+        msg.cahnnel.send("there was an error! :(")
     }
 })
 
