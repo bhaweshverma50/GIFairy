@@ -48,7 +48,11 @@ module.exports = {
         }
 
         if (!cmd) {
-            msg.channel.send(`${name} is not a valid command.`);
+            const error = new Discord.MessageEmbed()
+                .setColor('#D31C1F')
+                .setTitle('Oops!')
+                .setDescription(`\`${name}\` is not a valid command`)
+            msg.channel.send(error);
 
             return;
         }

@@ -53,8 +53,11 @@ bot.on('message', msg => {
         console.log(cmd);
         cmd.execute(bot, msg, args, Discord);
     } catch (e) {
-        // console.log(e);
-        msg.cahnnel.send("there was an error! :(")
+        const error = new Discord.MessageEmbed()
+            .setColor('#D31C1F')
+            .setTitle('Oops!')
+            .setDescription(`\`${msg.content}\` is not a valid command`)
+        msg.channel.send(error)
     }
 })
 
