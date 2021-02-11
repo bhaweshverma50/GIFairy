@@ -20,6 +20,25 @@ module.exports = {
             );
         }
 
+        function check(str) {
+            console.log("checking: " + str)
+            if (str === 'help') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name} <command>\``
+                }
+            }
+            else if (str === 'ping') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name}\``
+                }
+            }
+            else if (str === 'clear') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name} <number (1-100)>\``
+                }
+            }
+        }
+
         if (!args.length) {
             data.push("Here is a list of my commands.");
             data.push(`${prefix}` + commands.map(c => c.name).join(`\n${prefix}`));
@@ -39,9 +58,7 @@ module.exports = {
             .setTitle(`${toTitleCase(cmd.name)} Command`)
             .setDescription(`${cmd.desc}`)
             .addFields(
-                {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} <command>\``
-                },
+                check(cmd.name),
                 {
                     name: 'Aliases', value: `\`${cmd.aliases.join(', ')}\``
                 },
