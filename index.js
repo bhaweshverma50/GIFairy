@@ -1,3 +1,19 @@
+const http = require('http');
+require('dotenv').config();
+const hostname = '0.0.0.0';
+const port = process.env.PORT;
+const prefix = process.env.prefix;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('GIFairy is up and running!');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
 console.log("********************")
 console.log("Starting...")
 console.log("********************\n")
@@ -5,7 +21,7 @@ console.log("********************\n")
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
-const { prefix, token } = require('./config.json');
+// const { prefix, token } = require('./config.json');
 
 bot.commands = new Discord.Collection();
 
@@ -42,4 +58,4 @@ bot.on('message', msg => {
     }
 })
 
-bot.login(token);
+bot.login(process.env.TOKEN);
