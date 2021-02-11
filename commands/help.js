@@ -1,4 +1,4 @@
-const prefix = process.env.prefix;
+const prefix = process.env.PREFIX;
 
 module.exports = {
     name: "help",
