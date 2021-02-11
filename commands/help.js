@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['h', 'hlp', 'cmd', 'cmds'],
     async execute(bot, msg, args) {
         const data = [];
-        const { commands } = msg.bot;
+        const { commands } = msg.client;
 
         if (!args.length) {
             data.push("Here is a list of my commands.");
