@@ -45,7 +45,7 @@ module.exports = {
 
         if (!args.length) {
             const help = new Discord.MessageEmbed()
-                .setColor('#D31C1F')
+                .setColor('#8890BF')
                 .setAuthor('Help Centre', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Info_icon_002.svg/1200px-Info_icon_002.svg.png')
                 .setDescription(`This is a multi purpose GIF bot which can send unlimited funny memes on demand. You can send random memes or based on search tags.`)
                 .addFields(
@@ -71,7 +71,7 @@ module.exports = {
 
         if (!cmd) {
             const error = new Discord.MessageEmbed()
-                .setColor('#D31C1F')
+                .setColor('#BF2A37')
                 .setTitle('Error!')
                 .setDescription(`\`${name}\` is not a valid command`)
                 .setTimestamp()
@@ -81,7 +81,7 @@ module.exports = {
         }
 
         const help = new Discord.MessageEmbed()
-            .setColor('#FECF56')
+            .setColor('#636DA6')
             .setTitle(`${toTitleCase(cmd.name)} Command`)
             .setDescription(`${cmd.desc}`)
             .addFields(

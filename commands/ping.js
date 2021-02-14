@@ -4,7 +4,7 @@ module.exports = {
     aliases: ['p'],
     async execute(bot, msg, args, Discord) {
         const ping = new Discord.MessageEmbed()
-            .setColor('#0099ff')
+            .setColor('#0D9FD9')
             .setDescription(`📈 **Ping:** ${bot.ws.ping}ms`)
         msg.channel.send(ping);
     }

@@ -7,7 +7,7 @@ module.exports = {
     async execute(bot, msg, args, Discord) {
         function err() {
             const error = new Discord.MessageEmbed()
-                .setColor('#D31C1F')
+                .setColor('#BF2A37')
                 .setTitle('Invalid Argument!')
                 .setDescription(`Please enter number of messages to clear \`[1-100]\``)
                 .addFields(
@@ -37,9 +37,9 @@ module.exports = {
                 msg.channel.bulkDelete(parseInt(args) + 1)
                     .catch(err => console.log(err))
                 const clear = new Discord.MessageEmbed()
-                    .setColor('#FE0E2E')
-                    .setDescription(`✅ Deleted ${args} messages successfully!`)
-                msg.channel.send(clear).then(m => m.delete({ timeout: 3000 }));
+                    .setColor('#86B543')
+                    .setDescription(`Deleted ${args} messages successfully 👍`)
+                msg.channel.send(clear).then(m => m.delete({ timeout: 4000 }));
 
             }
         }
