@@ -16,7 +16,6 @@ module.exports = {
         let json = await response.json();
 
         const i = Math.floor(Math.random() * json.results.length);
-        msg.channel.send(tags[gif]);
         msg.channel.send(json.results[i].url);
     }
 }
