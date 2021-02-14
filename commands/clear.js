@@ -9,10 +9,10 @@ module.exports = {
             const error = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
                 .setTitle('Invalid Argument!')
-                .setDescription(`Please enter number of messages to clear \`[1-100]\``)
+                .setDescription(`Please enter number of messages to clear \`[1-99]\``)
                 .addFields(
                     {
-                        name: `\nUsage :`, value: `\nYou can use \`${prefix}clear [1-100]\``
+                        name: `\nUsage :`, value: `\nYou can use \`${prefix}clear [1-99]\``
                     },
                     {
                         name: `\nExample :`, value: `\n\`${prefix}clear 25\`, \`${prefix}c 10\``
@@ -28,7 +28,7 @@ module.exports = {
             if (isNaN(args)) {
                 msg.channel.send(err());
                 // msg.channel.send("Invalid <args>! Only numbers are allowed");
-            } else if (args > 100) {
+            } else if (args > 99) {
                 msg.channel.send(err());
                 // msg.channel.send("Can't clear more than 100 messages! Enter a number less than 100");
             } else {

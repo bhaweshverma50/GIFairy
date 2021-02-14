@@ -6,7 +6,6 @@ module.exports = {
     aliases: ['h', 'hlp', 'cmd', 'cmds'],
 
     async execute(bot, msg, args, Discord) {
-        const data = [];
         const name = args[0];
         const { commands } = msg.client;
         const cmd = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
@@ -37,6 +36,11 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [1-100]\``
                 }
             }
+            else if (str === 'search') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name} [tag/keyword]\``
+                }
+            }
         }
 
         function cmnd() {
@@ -56,17 +60,15 @@ module.exports = {
                         name: `\nList of Command Names :`, value: `\n\`${cmnd()}\``
                     },
                     {
-                        name: `\nUsage :`, value: `\nYou can use \`${prefix}help [command name]\` to get info about a specific command.`
+                        name: `\nUsage :`, value: `\nYou can use \`${prefix}help [command name]\` or \`${prefix}[alias] [command name]\` to get info about a specific command.`
                     },
+                    {
+                        name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[2])}\``
+                    }
                 )
                 .setTimestamp()
             msg.channel.send(help);
             return;
-
-            // data.push("Here is a list of my commands.");
-            // data.push(`${ prefix }` + commands.map(c => c.name).join(`\n${ prefix }`));
-            // data.push(`\nYou can use ${ prefix }help[command name]to get info about a specific command.`);
-            // msg.channel.send(data);
         }
 
         if (!cmd) {
@@ -95,10 +97,3 @@ module.exports = {
         msg.channel.send(help);
     }
 }
-
-// data.push(`Name: ${cmd.name}`);
-
-// if (cmd.desc) data.push(`Description: ${cmd.desc}`);
-// if (cmd.aliases) data.push(`Aliases: ${cmd.aliases.join(', ')}`);
-
-// msg.channel.send(data);
