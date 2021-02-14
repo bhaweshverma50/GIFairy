@@ -26,7 +26,7 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [command name]\``
                 }
             }
-            else if (str === 'ping') {
+            else if (str === 'ping' || str === 'random') {
                 return {
                     name: 'Usage', value: `\`${prefix}${cmd.name}\``
                 }
@@ -38,7 +38,7 @@ module.exports = {
             }
             else if (str === 'search') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [tag/keyword]\``
+                    name: 'Usage', value: `\`${prefix}${cmd.name} [tag/keyword]\` or \`${prefix} [tag/keyword]\``
                 }
             }
         }
@@ -76,6 +76,11 @@ module.exports = {
                 .setColor('#BF2A37')
                 .setTitle('Error!')
                 .setDescription(`\`${name}\` is not a valid command`)
+                .addFields(
+                    {
+                        name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
+                    }
+                )
                 .setTimestamp()
             msg.channel.send(error);
 

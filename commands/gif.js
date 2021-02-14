@@ -24,12 +24,15 @@ module.exports = {
         } else if (args.length == 0) {
             const error = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
-                .setTitle('Error!')
-                .setDescription(`\`${msg}\` is not a valid command`)
+                .setTitle('Oops!')
+                .setDescription(`\`${msg}\` has missing arguments.`)
+                .addFields(
+                    {
+                        name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
+                    },
+                )
                 .setTimestamp()
             msg.channel.send(error);
         }
-
-
     }
 }

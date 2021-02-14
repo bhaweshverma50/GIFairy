@@ -1,6 +1,6 @@
 module.exports = {
     name: "ping",
-    desc: "Ping the bot and check it's latency",
+    desc: "Ping the bot and check it's latency.",
     aliases: ['p'],
     async execute(bot, msg, args, Discord) {
         const ping = new Discord.MessageEmbed()

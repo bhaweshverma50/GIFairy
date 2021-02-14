@@ -2,7 +2,7 @@ const prefix = process.env.PREFIX;
 
 module.exports = {
     name: "clear",
-    desc: "Clear the messages",
+    desc: "Clear the messages.",
     aliases: ['c', 'cl', 'clr'],
     async execute(bot, msg, args, Discord) {
         function err() {

@@ -57,6 +57,11 @@ bot.on('message', msg => {
             .setColor('#D31C1F')
             .setTitle('Error!')
             .setDescription(`\`${msg.content}\` is not a valid command`)
+            .addFields(
+                {
+                    name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
+                }
+            )
         msg.channel.send(error)
     }
 })
