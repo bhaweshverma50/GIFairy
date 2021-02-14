@@ -41,6 +41,11 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [tag/keyword]\` or \`${prefix} [tag/keyword]\``
                 }
             }
+            else if (str === 'avatar') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name} [@username]\` or \`${prefix}av\` or \`${prefix}dp\``
+                }
+            }
         }
 
         function cmnd() {
@@ -63,7 +68,7 @@ module.exports = {
                         name: `\nUsage :`, value: `\nYou can use \`${prefix}help [command name]\` or \`${prefix}[alias] [command name]\` to get info about a specific command.`
                     },
                     {
-                        name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[2])}\``
+                        name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[4])}\``
                     }
                 )
                 .setTimestamp()
