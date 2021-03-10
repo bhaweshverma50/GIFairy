@@ -14,7 +14,7 @@ module.exports = {
         if (args.length != 0) {
             tags = args.slice(0, args.length).join(" ");
             console.log(tags);
-            let url = `https://api.tenor.com/v1/search?q=${tags}&key=${process.env.TENOR}&limit=15`;
+            let url = `https://api.tenor.com/v1/search?q=${tags}&key=${process.env.TENOR}&limit=15&contentfilter=high`;
             let response = await fetch(url);
             let json = await response.json();
             // console.log(json);
