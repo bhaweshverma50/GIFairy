@@ -34,12 +34,17 @@ module.exports = {
             } else {
                 // msg.channel.messages.fetch({ limit: parseInt(args) + 1 }).then(messages => {
                 //     msg.channel.bulkDelete(messages)
-                msg.channel.bulkDelete(parseInt(args) + 1)
+                const fetched = await msg.channel.messages.fetch({ limit: parseInt(args) + 1 });
+                const json = JSON.stringify(fetched)
+
+                msg.channel.bulkDelete(fetched)
+                    .then(console.log(json))
                     .catch(err => console.log(err))
                 const clear = new Discord.MessageEmbed()
                     .setColor('#86B543')
                     .setDescription(`Deleted ${args} messages successfully 👍`)
-                msg.channel.send(clear).then(m => m.delete({ timeout: 4000 }));
+                msg.channel.send(clear)
+                    .then(m => m.delete({ timeout: 4000 }));
 
             }
         }
