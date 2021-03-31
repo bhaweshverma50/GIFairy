@@ -38,11 +38,12 @@ module.exports = {
                 const json = JSON.stringify(fetched)
 
                 msg.channel.bulkDelete(fetched)
-                    .then(console.log(json))
+                    // .then(console.log(json))
                     .catch(err => console.log(err))
                 const clear = new Discord.MessageEmbed()
                     .setColor('#86B543')
-                    .setDescription(`Deleted ${args} messages successfully 👍`)
+                    // .setDescription(`Deleted ${args} messages successfully 👍`)
+                    .setDescription(`Deleted messages successfully 👍`)
                 msg.channel.send(clear)
                     .then(m => m.delete({ timeout: 4000 }));
 
