@@ -35,7 +35,7 @@ for (const file of files) {
 bot.on('ready', () => console.log(`${bot.user.tag} is online!\n`));
 
 bot.on('message', msg => {
-    if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+    if (!msg.content.toLowerCase().startsWith(prefix) || msg.author.bot) return;
     const args = msg.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
     console.log("CMD Name: " + cmdName);
