@@ -8,14 +8,14 @@ let letter = '';
 function rGen() {
     let rletter = Math.floor(Math.random() * alphabets.length);
     letter = alphabets[rletter];
-    console.log("rgen")
+    // console.log("rgen")
     return letter;
 }
 
 function fGen(args) {
     let fletter = args[0].charAt(args[0].length - 1);
     letter = fletter;
-    console.log("fgen")
+    // console.log("fgen")
     return letter;
 }
 

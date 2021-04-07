@@ -45,6 +45,11 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [@username]\` or \`${prefix}av\` or \`${prefix}dp\``
                 }
             }
+            else if (str === 'game') {
+                return {
+                    name: 'Usage', value: `\`${prefix}${cmd.name} [start code]\` or \`${prefix}g [word]\` or \`${prefix}gm [word]\``
+                }
+            }
         }
 
         function cmnd() {
