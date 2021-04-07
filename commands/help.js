@@ -20,7 +20,6 @@ module.exports = {
         }
 
         function check(str) {
-            console.log("checking: " + str)
             if (str === 'help') {
                 return {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [command name]\``

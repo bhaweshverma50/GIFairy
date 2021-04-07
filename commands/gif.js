@@ -8,20 +8,12 @@ module.exports = {
 
     async execute(bot, msg, args, Discord) {
         let tags = 0;
-        // msg.channel.send("Here is your GIF!");
-        console.log(`Args length: ${args.length}`);
 
         if (args.length != 0) {
             tags = args.slice(0, args.length).join(" ");
-            console.log(tags);
-            // if (tags === 'nsfw') {
-            //     if (msg.channel.nsfw) return msg.channel.send('nsfw channel')
-            //     else return msg.channel.send('sfw channel')
-            // }
             let url = `https://api.tenor.com/v1/search?q=${tags}&key=${process.env.TENOR}&limit=15&contentfilter=high`;
             let response = await fetch(url);
             let json = await response.json();
-            // console.log(json);
 
             const i = Math.floor(Math.random() * json.results.length);
             msg.channel.send(json.results[i].url);

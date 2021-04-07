@@ -38,8 +38,8 @@ bot.on('message', msg => {
     if (!msg.content.toLowerCase().startsWith(prefix) || msg.author.bot) return;
     const args = msg.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
-    console.log("CMD Name: " + cmdName);
-    console.log("Args: " + args);
+    // console.log("CMD Name: " + cmdName);
+    // console.log("Args: " + args);
 
 
     const cmd = bot.commands.get(cmdName)
@@ -50,7 +50,7 @@ bot.on('message', msg => {
     }
 
     try {
-        console.log(cmd);
+        // console.log(cmd);
         cmd.execute(bot, msg, args, Discord);
     } catch (e) {
         const error = new Discord.MessageEmbed()
