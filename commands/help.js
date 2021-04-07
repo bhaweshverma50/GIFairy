@@ -50,6 +50,11 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}${cmd.name} [start code]\` or \`${prefix}g [word]\` or \`${prefix}gm [word]\``
                 }
             }
+            else if (str === 'confession') {
+                return {
+                    name: 'Usage', value: `\`${prefix}listen [your confession]\` or \`${prefix}l [message]\` or \`${prefix}cf [message]\``
+                }
+            }
         }
 
         function cmnd() {

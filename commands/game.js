@@ -4,6 +4,7 @@ var start = false;
 const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 let done = []
 let letter = '';
+let count = 0;
 
 function rGen() {
     let rletter = Math.floor(Math.random() * alphabets.length);
@@ -24,7 +25,7 @@ let dict = require('../words.json')
 
 module.exports = {
     name: "game",
-    desc: "Start the game",
+    desc: "Type in words begining with given letter and the next person will write a word beginning with the letter your word ends with. Sounds confusing, right? Don't worry, it's simple once you get into it.",
     aliases: ['g', 'gm'],
 
     async execute(bot, msg, args, Discord) {
@@ -38,7 +39,7 @@ module.exports = {
             else {
                 start = true;
                 done = []
-
+                count = 0
                 const gstart = new Discord.MessageEmbed()
                     .setColor('#86B543')
                     .setTitle('Game Started Successfully!')
@@ -72,10 +73,12 @@ module.exports = {
             else if (check_include) return msg.channel.send(avWord);
             else {
                 done.push(args[0]);
+                count += 1
                 const accWord = new Discord.MessageEmbed()
                     .setColor('#86B543')
                     .setTitle('Good Job!')
                     .setDescription(`Now write a word starting with letter \`${fGen(args)}\``)
+                    .setFooter(`Word count : ${count}`)
                     .setTimestamp()
                 return msg.channel.send(accWord);
             }
