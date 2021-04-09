@@ -3,7 +3,7 @@ module.exports = {
     desc: "Just DM the bot your confession followed the prefix and it will post on behalf of you keeping your identity a secret.",
     aliases: ['con', 'cnf', 'cf', 'listen', 'l'],
     async execute(bot, msg, args, Discord) {
-        const channel = bot.channels.cache.find(channel => channel.id == '827573135343353867')
+        const channel = bot.channels.cache.find(channel => channel.id == '829395940909645855')
 
         if (msg.channel.type == 'dm') {
             let userContent = args.join(" ")
