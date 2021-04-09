@@ -14,7 +14,7 @@ function rGen() {
 }
 
 function fGen(args) {
-    let fletter = args[0].charAt(args[0].length - 1);
+    let fletter = args.charAt(args.length - 1);
     letter = fletter;
     // console.log("fgen")
     return letter;
@@ -30,11 +30,15 @@ module.exports = {
 
     async execute(bot, msg, args, Discord) {
 
+        if (!args[0]) return msg.channel.send(invalid);
+
+        console.log(`Args: ${args[0].toLowerCase()}`)
+        args = args[0].toLowerCase()
         exist = dict[args];
 
         if (!args[0]) return msg.channel.send(invalid);
 
-        else if (args[0].toLowerCase() === 'xlr8') {
+        else if (args === 'xlr8') {
             if (start) return msg.channel.send(starterr);
             else {
                 start = true;
@@ -54,8 +58,8 @@ module.exports = {
 
         else if (exist) {
 
-            check_letter = args[0].startsWith(letter);
-            check_include = done.includes(args[0]);
+            check_letter = args.startsWith(letter);
+            check_include = done.includes(args);
 
             const naWord = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
@@ -72,7 +76,7 @@ module.exports = {
             if (!check_letter) return msg.channel.send(naWord);
             else if (check_include) return msg.channel.send(avWord);
             else {
-                done.push(args[0]);
+                done.push(args);
                 count += 1
                 const accWord = new Discord.MessageEmbed()
                     .setColor('#86B543')

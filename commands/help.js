@@ -55,6 +55,11 @@ module.exports = {
                     name: 'Usage', value: `\`${prefix}listen [your confession]\` or \`${prefix}l [message]\` or \`${prefix}cf [message]\``
                 }
             }
+            else if (str === 'dictionary') {
+                return {
+                    name: 'Usage', value: `\`${prefix}dict [word]\` or \`${prefix}d [word]\``
+                }
+            }
         }
 
         function cmnd() {
@@ -77,7 +82,7 @@ module.exports = {
                         name: `\nUsage :`, value: `\nYou can use \`${prefix}help [command name]\` or \`${prefix}[alias] [command name]\` to get info about a specific command.`
                     },
                     {
-                        name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[3])}\``
+                        name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[6])}\``
                     }
                 )
                 .setTimestamp()
