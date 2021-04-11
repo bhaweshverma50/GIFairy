@@ -52,7 +52,10 @@ module.exports = {
             }
             else if (str === 'confession') {
                 return {
-                    name: 'Usage', value: `\`${prefix}listen [your confession]\` or \`${prefix}l [message]\` or \`${prefix}cf [message]\``
+                    name: 'Usage', value: `\`${prefix}listen [your confession]\` or \`${prefix}l [message]\` or \`${prefix}cf [message]\`\n
+                    \*\*For Scheduled Confession:\*\*\nUse flag \`-t\` for unannounced scheduled confession followed by \`time [in minutes]\` \*\*For Example:\*\* \`gfl -t 5 [write your message]\`\n
+                    Use flag \`-ta\` for announced scheduled confession followed by \`time [in minutes]\`. This will notify in the specific channel that an incoming message is on it's way (it will not reveal the sender). \n\*\*For Example:\*\* \`gfl -ta 5 [write your message]\`
+                    `
                 }
             }
             else if (str === 'dictionary') {

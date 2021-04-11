@@ -30,16 +30,16 @@ module.exports = {
 
     async execute(bot, msg, args, Discord) {
 
-        if (!args[0]) return msg.channel.send(invalid);
+        if (!args[0]) return await msg.channel.send(invalid);
 
-        console.log(`Args: ${args[0].toLowerCase()}`)
+        // console.log(`Args: ${args[0].toLowerCase()}`)
         args = args[0].toLowerCase()
         exist = dict[args];
 
         if (!args[0]) return msg.channel.send(invalid);
 
         else if (args === 'xlr8') {
-            if (start) return msg.channel.send(starterr);
+            if (start) return await msg.channel.send(starterr);
             else {
                 start = true;
                 done = []
@@ -50,11 +50,11 @@ module.exports = {
                     .setDescription(`Begin the word with letter \`${rGen()}\``)
                     .setTimestamp()
 
-                return msg.channel.send(gstart);
+                return await msg.channel.send(gstart);
             }
         }
 
-        else if (!start) return msg.channel.send(adminerr);
+        else if (!start) return await msg.channel.send(adminerr);
 
         else if (exist) {
 
@@ -73,8 +73,8 @@ module.exports = {
                 .setDescription(`Try another word starting with letter \`${letter}\``)
                 .setTimestamp()
 
-            if (!check_letter) return msg.channel.send(naWord);
-            else if (check_include) return msg.channel.send(avWord);
+            if (!check_letter) return await msg.channel.send(naWord);
+            else if (check_include) return await msg.channel.send(avWord);
             else {
                 done.push(args);
                 count += 1
@@ -84,10 +84,10 @@ module.exports = {
                     .setDescription(`Now write a word starting with letter \`${fGen(args)}\``)
                     .setFooter(`Word count : ${count}`)
                     .setTimestamp()
-                return msg.channel.send(accWord);
+                return await msg.channel.send(accWord);
             }
         }
-        else return msg.channel.send(new Discord.MessageEmbed()
+        else return await msg.channel.send(new Discord.MessageEmbed()
             .setColor('#BF2A37')
             .setTitle('Word not found!')
             .setDescription(`Try again buddy! Write a valid word starting with letter \`${letter}\``)
