@@ -35,7 +35,6 @@ for (const file of files) {
 const firebase = require('firebase/app')
 const FieldValue = require('firebase-admin').firestore.FieldValue
 const admin = require('firebase-admin')
-// const serviceAccount = process.env['CREDS']
 
 admin.initializeApp({
     credential: admin.credential.cert({
