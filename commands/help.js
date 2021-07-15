@@ -1,11 +1,11 @@
-const prefix = process.env.PREFIX;
+// const prefix = process.env.PREFIX;
 
 module.exports = {
     name: "help",
     desc: "Shows a list of cmds or info about a specific command.",
     aliases: ['h', 'hlp', 'cmd', 'cmds'],
 
-    async execute(bot, msg, args, Discord) {
+    async execute(bot, msg, args, Discord, db, pfx) {
         const name = args[0];
         const { commands } = msg.client;
         const cmd = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
@@ -22,37 +22,37 @@ module.exports = {
         function check(str) {
             if (str === 'help') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [command name]\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [command name]\``
                 }
             }
             else if (str === 'ping' || str === 'random') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name}\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name}\``
                 }
             }
             else if (str === 'clear') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [1-100]\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [1-100]\``
                 }
             }
             else if (str === 'search') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [tag/keyword]\` or \`${prefix} [tag/keyword]\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [tag/keyword]\` or \`${pfx} [tag/keyword]\``
                 }
             }
             else if (str === 'avatar') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [@username]\` or \`${prefix}av\` or \`${prefix}dp\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [@username]\` or \`${pfx}av\` or \`${pfx}dp\``
                 }
             }
             else if (str === 'game') {
                 return {
-                    name: 'Usage', value: `\`${prefix}${cmd.name} [start code]\` or \`${prefix}g [word]\` or \`${prefix}gm [word]\``
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [start code]\` or \`${pfx}g [word]\` or \`${pfx}gm [word]\``
                 }
             }
             else if (str === 'confession') {
                 return {
-                    name: 'Usage', value: `\`${prefix}listen [your confession]\` or \`${prefix}l [message]\` or \`${prefix}cf [message]\`\n
+                    name: 'Usage', value: `\`${pfx}listen [your confession]\` or \`${pfx}l [message]\` or \`${pfx}cf [message]\`\n
                     \*\*For Scheduled Confession:\*\*\nUse flag \`-t\` for unannounced scheduled confession followed by \`time [in minutes]\` \*\*For Example:\*\* \`gfl -t 5 [write your message]\`\n
                     Use flag \`-ta\` for announced scheduled confession followed by \`time [in minutes]\`. This will notify in the specific channel that an incoming message is on it's way (it will not reveal the sender). \n\*\*For Example:\*\* \`gfl -ta 5 [write your message]\`
                     `
@@ -60,7 +60,7 @@ module.exports = {
             }
             else if (str === 'dictionary') {
                 return {
-                    name: 'Usage', value: `\`${prefix}dict [word]\` or \`${prefix}d [word]\``
+                    name: 'Usage', value: `\`${pfx}dict [word]\` or \`${pfx}d [word]\``
                 }
             }
         }
@@ -76,13 +76,13 @@ module.exports = {
                 .setDescription(`This is a multi purpose GIF bot which can send unlimited funny memes on demand. You can send random memes or based on search tags.`)
                 .addFields(
                     {
-                        name: `\nPrefix :`, value: `Prefix to use this bot is : \`${prefix}[command name]\` **Eg :** \`${prefix}ping\`, \`${prefix}clear [1-100]\``
+                        name: `\nPrefix :`, value: `Prefix to use this bot is : \`${pfx}[command name]\` **Eg :** \`${pfx}ping\`, \`${pfx}clear [1-100]\``
                     },
                     {
                         name: `\nList of Command Names :`, value: `\n\`${cmnd()}\``
                     },
                     {
-                        name: `\nUsage :`, value: `\nYou can use \`${prefix}help [command name]\` or \`${prefix}[alias] [command name]\` to get info about a specific command.`
+                        name: `\nUsage :`, value: `\nYou can use \`${pfx}help [command name]\` or \`${pfx}[alias] [command name]\` to get info about a specific command.`
                     },
                     {
                         name: `\nAliases :`, value: `\`${JSON.stringify(commands.map(c => c.aliases)[6])}\``

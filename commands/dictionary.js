@@ -8,7 +8,18 @@ module.exports = {
     desc: "Get the meaning of the word you are looking for.",
     aliases: ['d', 'dict'],
 
-    async execute(bot, msg, args, Discord) {
+    async execute(bot, msg, args, Discord, db, pfx) {
+
+        const invalid = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setTitle('Error!')
+            .setDescription(`Invalid Argument!`)
+            .addFields(
+                {
+                    name: `\nYou may use :`, value: `\`${pfx}help\` or \`${pfx}help [command name]\` for command related assistance.`
+                }
+            )
+            .setTimestamp()
 
         function toTitleCase(str) {
             return str.replace(
@@ -44,14 +55,3 @@ module.exports = {
             .setTimestamp())
     }
 }
-
-const invalid = new Discord.MessageEmbed()
-    .setColor('#BF2A37')
-    .setTitle('Error!')
-    .setDescription(`Invalid Argument!`)
-    .addFields(
-        {
-            name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
-        }
-    )
-    .setTimestamp()

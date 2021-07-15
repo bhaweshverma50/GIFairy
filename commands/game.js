@@ -28,7 +28,40 @@ module.exports = {
     desc: "Type in words begining with given letter and the next person will write a word beginning with the letter your word ends with. Sounds confusing, right? Don't worry, it's simple once you get into it.",
     aliases: ['g', 'gm'],
 
-    async execute(bot, msg, args, Discord) {
+    async execute(bot, msg, args, Discord, db, pfx) {
+
+        const invalid = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setTitle('Error!')
+            .setDescription(`Invalid Argument!`)
+            .addFields(
+                {
+                    name: `\nYou may use :`, value: `\`${pfx}help\` or \`${pfx}help [command name]\` for command related assistance.`
+                }
+            )
+            .setTimestamp()
+
+        const starterr = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setTitle('Error!')
+            .setDescription(`Game has already been started and is currently running.\n You can stop the current game session using \`stop\` command and restart the game.`)
+            .addFields(
+                {
+                    name: `\nYou may use :`, value: `\`${pfx}help\` or \`${pfx}help [command name]\` for command related assistance.`
+                }
+            )
+            .setTimestamp()
+
+        const adminerr = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setTitle('Error!')
+            .setDescription(`Game has not been started yet!\n Ask the \*\*Admin\*\* to start the game first.`)
+            .addFields(
+                {
+                    name: `\nYou may use :`, value: `\`${pfx}help\` or \`${pfx}help [command name]\` for command related assistance.`
+                }
+            )
+            .setTimestamp()
 
         if (!args[0]) return await msg.channel.send(invalid);
 
@@ -94,36 +127,3 @@ module.exports = {
             .setTimestamp())
     }
 }
-
-const invalid = new Discord.MessageEmbed()
-    .setColor('#BF2A37')
-    .setTitle('Error!')
-    .setDescription(`Invalid Argument!`)
-    .addFields(
-        {
-            name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
-        }
-    )
-    .setTimestamp()
-
-const starterr = new Discord.MessageEmbed()
-    .setColor('#BF2A37')
-    .setTitle('Error!')
-    .setDescription(`Game has already been started and is currently running.\n You can stop the current game session using \`stop\` command and restart the game.`)
-    .addFields(
-        {
-            name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
-        }
-    )
-    .setTimestamp()
-
-const adminerr = new Discord.MessageEmbed()
-    .setColor('#BF2A37')
-    .setTitle('Error!')
-    .setDescription(`Game has not been started yet!\n Ask the \*\*Admin\*\* to start the game first.`)
-    .addFields(
-        {
-            name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
-        }
-    )
-    .setTimestamp()

@@ -1,4 +1,4 @@
-const prefix = process.env.PREFIX;
+// const prefix = process.env.PREFIX;
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
     desc: "Search for a GIF based on provided tag/keyword and send one of them.",
     aliases: ['s', 'srch', 'sch', ''],
 
-    async execute(bot, msg, args, Discord) {
+    async execute(bot, msg, args, Discord, db, pfx) {
         let tags = 0;
 
         if (args.length != 0) {
@@ -24,7 +24,7 @@ module.exports = {
                 .setDescription(`\`${msg}\` has missing arguments.`)
                 .addFields(
                     {
-                        name: `\nYou may use :`, value: `\`gfhelp\` or \`gfhelp [command name]\` for command related assistance.`
+                        name: `\nYou may use :`, value: `\`${pfx}help\` or \`${pfx}help [command name]\` for command related assistance.`
                     },
                 )
                 .setTimestamp()

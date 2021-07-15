@@ -1,10 +1,10 @@
-const prefix = process.env.PREFIX;
+// const prefix = process.env.PREFIX;
 
 module.exports = {
     name: "clear",
     desc: "Clear the messages.",
     aliases: ['c', 'cl', 'clr'],
-    async execute(bot, msg, args, Discord) {
+    async execute(bot, msg, args, Discord, db, pfx) {
         function err() {
             const error = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
@@ -12,10 +12,10 @@ module.exports = {
                 .setDescription(`Please enter number of messages to clear \`[1-99]\``)
                 .addFields(
                     {
-                        name: `\nUsage :`, value: `\nYou can use \`${prefix}clear [1-99]\``
+                        name: `\nUsage :`, value: `\nYou can use \`${pfx}clear [1-99]\``
                     },
                     {
-                        name: `\nExample :`, value: `\n\`${prefix}clear 25\`, \`${prefix}c 10\``
+                        name: `\nExample :`, value: `\n\`${pfx}clear 25\`, \`${pfx}c 10\``
                     },
                 )
                 .setTimestamp()
@@ -42,10 +42,9 @@ module.exports = {
                     .catch(err => console.log(err))
                 const clear = new Discord.MessageEmbed()
                     .setColor('#86B543')
-                    // .setDescription(`Deleted ${args} messages successfully 👍`)
                     .setDescription(`Deleted messages successfully 👍`)
                 msg.channel.send(clear)
-                    .then(m => m.delete({ timeout: 4000 }));
+                    .then(m => m.delete({ timeout: 5000 }));
 
             }
         }
