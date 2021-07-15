@@ -64,8 +64,8 @@ module.exports = {
             })
             return category
         }
-
-        if (msg.member.hasPermission('ADMINISTRATOR') || msg.guild.ownerID == msg.author.id || msg.member.roles.find(r => r.name === "Admin") || msg.member.roles.find(r => r.name === "Moderator") || msg.member.roles.find(r => r.name === "Mod")) {
+        let role = msg.guild.roles.find("name", "Moderator")
+        if (msg.member.hasPermission('ADMINISTRATOR') || msg.guild.ownerID == msg.author.id || msg.member.roles.has(role)) {
             createConfess()
             // createConfession()
             const fetched = await msg.channel.messages.fetch({ limit: 1 });
