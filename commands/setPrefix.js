@@ -18,7 +18,7 @@ module.exports = {
                     const success = new Discord.MessageEmbed()
                         .setColor('#86B543')
                         .setTitle('Success!')
-                        .setDescription(`Prefix updaed to \`${prefix}\` successfully!`)
+                        .setDescription(`Prefix updated to \`${prefix}\` successfully!`)
                         .setTimestamp()
                     msg.channel.send(success);
                 })
