@@ -65,7 +65,7 @@ module.exports = {
             return category
         }
 
-        if (msg.member.hasPermission('ADMINISTRATOR') || msg.guild.ownerID == msg.author.id || msg.member.roles.cache.find(r => r.name === "Admin") || msg.member.roles.cache.find(r => r.name === "Moderator") || msg.member.roles.cache.find(r => r.name === "Mod")) {
+        if (msg.member.hasPermission('ADMINISTRATOR') || msg.guild.ownerID == msg.author.id || msg.member.roles.find(r => r.name.toLowerCase() === "admin") || msg.member.roles.find(r => r.name.toLowerCase() === "administrator") || msg.member.roles.find(r => r.name.toLowerCase() === "moderator") || msg.member.roles.find(r => r.name.toLowerCase() === "mod")) {
             createConfess()
             // createConfession()
             const fetched = await msg.channel.messages.fetch({ limit: 1 });

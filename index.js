@@ -94,7 +94,7 @@ bot.on('message', msg => {
 
         try {
             // console.log(cmd);
-            cmd.execute(bot, msg, args, Discord, db, prefix);
+            cmd.execute(bot, msg, args, Discord, db, prefix, admin);
             // msg.author.send('Hi!')
         } catch (e) {
             const error = new Discord.MessageEmbed()

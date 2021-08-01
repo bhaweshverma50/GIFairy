@@ -50,6 +50,11 @@ module.exports = {
                     name: 'Usage', value: `\`${pfx}${cmd.name} [start code]\` or \`${pfx}g [word]\` or \`${pfx}gm [word]\``
                 }
             }
+            else if (str === 'setGame') {
+                return {
+                    name: 'Usage', value: `\`${pfx}${cmd.name} [any start code]\` or \`${pfx}sg xlr8\``
+                }
+            }
             else if (str === 'confession') {
                 return {
                     name: 'Usage', value: `\`${pfx}listen [your confession]\` or \`${pfx}l [message]\` or \`${pfx}cf [message]\`\n

@@ -1,24 +1,8 @@
 const Discord = require("discord.js");
+const admin = require('firebase-admin')
 
-var start = false;
 const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-let done = []
-let letter = '';
-let count = 0;
 
-function rGen() {
-    let rletter = Math.floor(Math.random() * alphabets.length);
-    letter = alphabets[rletter];
-    // console.log("rgen")
-    return letter;
-}
-
-function fGen(args) {
-    let fletter = args.charAt(args.length - 1);
-    letter = fletter;
-    // console.log("fgen")
-    return letter;
-}
 
 let dict = require('../words.json')
 
@@ -29,6 +13,34 @@ module.exports = {
     aliases: ['g', 'gm'],
 
     async execute(bot, msg, args, Discord, db, pfx) {
+
+        const gameRef = db.collection(msg.guild.id).doc('game');
+        const gameInfo = await gameRef.get();
+        const gameData = gameInfo.data();
+        // console.log(args[0] === 'rs');
+        function rGen() {
+            let rletter = Math.floor(Math.random() * alphabets.length);
+            // letter = alphabets[rletter];
+            gameRef.update({
+                'letter': alphabets[rletter]
+            })
+            // console.log("rgen")
+            return alphabets[rletter]
+        }
+
+        function fGen(args) {
+            let fletter = args.charAt(args.length - 1);
+            // letter = fletter;
+            gameRef.update({
+                'letter': fletter
+            })
+            // console.log("fgen")
+            return fletter
+        }
+        // var start = gameData.start
+        // let done = gameData.done
+        // let letter = gameData.letter
+        // let count = gameData.count
 
         const invalid = new Discord.MessageEmbed()
             .setColor('#BF2A37')
@@ -69,14 +81,45 @@ module.exports = {
         args = args[0].toLowerCase()
         exist = dict[args];
 
-        if (!args[0]) return msg.channel.send(invalid);
+        if (!args[0]) return msg.channel.send(invalid)
 
-        else if (args === 'xlr8') {
-            if (start) return await msg.channel.send(starterr);
+        if (args[0] === 'sd') {
+            if (args[1] === gameData.code) {
+                gameRef.update({
+                    'start': false
+                }).then(msg.channel.send("Shutdown!"))
+            } else msg.channel.send('Cannot stop the game without secret code!')
+        } else msg.channel.send("ehh! -sd!")
+
+        if (args[0] === 'rs') {
+            console.log("in");
+            if (args[1] === gameData.code) {
+                gameRef.update({
+                    'start': false,
+                    'code': args[0],
+                    'done': [],
+                    'letter': null,
+                    'count': 0,
+                    'highscore': 0
+                }).then(msg.channel.send("Reset!"))
+            } else msg.channel.send('Cannot reset the game without secret code!')
+        } else msg.channel.send("ehh! -rs!")
+
+        if (args[0] === gameData.code) {
+            if (gameData.start) return msg.channel.send(starterr);
             else {
-                start = true;
-                done = []
-                count = 0
+                gameRef.update({
+                    'start': true
+                })
+                // start = true
+                gameRef.update({
+                    'done': []
+                })
+                // done = []
+                gameRef.update({
+                    'count': 0
+                })
+                // count = 0
                 const gstart = new Discord.MessageEmbed()
                     .setColor('#86B543')
                     .setTitle('Game Started Successfully!')
@@ -87,35 +130,43 @@ module.exports = {
             }
         }
 
-        else if (!start) return await msg.channel.send(adminerr);
+        else if (!gameData.start) return await msg.channel.send(adminerr);
 
         else if (exist) {
 
-            check_letter = args.startsWith(letter);
-            check_include = done.includes(args);
+            check_letter = args.startsWith(gameData.letter);
+            check_include = gameData.done.includes(args);
 
             const naWord = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
                 .setTitle('Invalid Word!')
-                .setDescription(`Write a word starting with letter \`${letter}\``)
+                .setDescription(`Write a word starting with letter \`${gameData.letter}\``)
                 .setTimestamp()
 
             const avWord = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
                 .setTitle('This word is already used!')
-                .setDescription(`Try another word starting with letter \`${letter}\``)
+                .setDescription(`Try another word starting with letter \`${gameData.letter}\``)
                 .setTimestamp()
 
             if (!check_letter) return await msg.channel.send(naWord);
             else if (check_include) return await msg.channel.send(avWord);
             else {
-                done.push(args);
-                count += 1
+                gameRef.update({
+                    done: admin.firestore.FieldValue.arrayUnion(args),
+                    count: admin.firestore.FieldValue.increment(1)
+                })
+                // done.push(args);
+                // count += 1
                 const accWord = new Discord.MessageEmbed()
                     .setColor('#86B543')
                     .setTitle('Good Job!')
                     .setDescription(`Now write a word starting with letter \`${fGen(args)}\``)
-                    .setFooter(`Word count : ${count}`)
+                    .addFields(
+                        {
+                            name: `\nWord Count :`, value: `${gameData.count}`
+                        })
+                    .setFooter(`Highscore : ${gameData.highscore}`)
                     .setTimestamp()
                 return await msg.channel.send(accWord);
             }
@@ -123,7 +174,7 @@ module.exports = {
         else return await msg.channel.send(new Discord.MessageEmbed()
             .setColor('#BF2A37')
             .setTitle('Word not found!')
-            .setDescription(`Try again buddy! Write a valid word starting with letter \`${letter}\``)
+            .setDescription(`Try again buddy! Write a valid word starting with letter \`${gameData.letter}\``)
             .setTimestamp())
     }
 }
