@@ -89,7 +89,7 @@ module.exports = {
                     'start': false
                 }).then(msg.channel.send("Shutdown!"))
             } else msg.channel.send('Cannot stop the game without secret code!')
-        } else msg.channel.send("ehh! -sd!")
+        }
 
         if (args[0] === 'rs') {
             console.log("in");
@@ -103,7 +103,7 @@ module.exports = {
                     'highscore': 0
                 }).then(msg.channel.send("Reset!"))
             } else msg.channel.send('Cannot reset the game without secret code!')
-        } else msg.channel.send("ehh! -rs!")
+        }
 
         if (args[0] === gameData.code) {
             if (gameData.start) return msg.channel.send(starterr);
