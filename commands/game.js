@@ -114,28 +114,6 @@ module.exports = {
             } else msg.channel.send('Invalid Secret Code! Cannot reset the game without the correct secret code!')
         }
 
-        // else if (arg === gameData.code) {
-        //     if (gameData.start) return msg.channel.send(starterr);
-        //     else {
-        //         gameRef.update({
-        //             'start': true
-        //         })
-        //         gameRef.update({
-        //             'done': []
-        //         })
-        //         gameRef.update({
-        //             'count': 0
-        //         })
-        //         const gstart = new Discord.MessageEmbed()
-        //             .setColor('#86B543')
-        //             .setTitle('Game Started Successfully!')
-        //             .setDescription(`Begin the word with letter \`${rGen()}\``)
-        //             .setTimestamp()
-
-        //         return await msg.channel.send(gstart);
-        //     }
-        // }
-
         else if (!gameData.start) return await msg.channel.send(adminerr);
 
         else if (exist) {
@@ -158,13 +136,12 @@ module.exports = {
             if (!check_letter) return await msg.channel.send(naWord);
             else if (check_include) return await msg.channel.send(avWord);
             else {
+                console.log(arg);
                 await gameRef.update({
                     done: admin.firestore.FieldValue.arrayUnion(arg),
                     count: admin.firestore.FieldValue.increment(1),
                 }).then(async () => {
-
-
-
+                    console.log(arg);
                     var gameIn = await gameRef.get();
                     var gameD = gameIn.data();
 
