@@ -28,7 +28,7 @@ module.exports = {
 
         function fGen(arg) {
             let fletter = arg.charAt(arg.length - 1);
-            gameRef.update({
+            await gameRef.update({
                 'letter': fletter
             })
             return fletter
