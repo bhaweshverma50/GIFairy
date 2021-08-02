@@ -182,7 +182,7 @@ module.exports = {
                     const accWord = await new Discord.MessageEmbed()
                         .setColor('#86B543')
                         .setTitle('Good Job!')
-                        .setDescription(`Now write a word starting with letter \`${fGen(arg)}\``)
+                        .setDescription(`Now write a word starting with letter \`${await fGen(arg)}\``)
                         .addFields(
                             {
                                 name: `\nWord Count :`, value: `${gameD.count}`
