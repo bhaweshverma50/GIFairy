@@ -26,7 +26,7 @@ module.exports = {
             return alphabets[rletter]
         }
 
-        function fGen(arg) {
+        async function fGen(arg) {
             let fletter = arg.charAt(arg.length - 1);
             await gameRef.update({
                 'letter': fletter
