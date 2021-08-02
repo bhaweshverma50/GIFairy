@@ -27,6 +27,9 @@ module.exports = {
         }
 
         function fGen(arg) {
+            console.log('====================================');
+            console.log(arg);
+            console.log('====================================');
             let fletter = arg.charAt(arg.length - 1);
             gameRef.update({
                 'letter': fletter
@@ -136,12 +139,11 @@ module.exports = {
             if (!check_letter) return await msg.channel.send(naWord);
             else if (check_include) return await msg.channel.send(avWord);
             else {
-                console.log(arg);
                 await gameRef.update({
                     done: admin.firestore.FieldValue.arrayUnion(arg),
                     count: admin.firestore.FieldValue.increment(1),
                 }).then(async () => {
-                    console.log(arg);
+
                     var gameIn = await gameRef.get();
                     var gameD = gameIn.data();
 
@@ -154,7 +156,9 @@ module.exports = {
 
                     gameIn = await gameRef.get();
                     gameD = gameIn.data();
-
+                    console.log('====================================');
+                    console.log(arg);
+                    console.log('====================================');
                     const accWord = await new Discord.MessageEmbed()
                         .setColor('#86B543')
                         .setTitle('Good Job!')
