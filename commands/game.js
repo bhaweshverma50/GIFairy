@@ -26,13 +26,12 @@ module.exports = {
             return alphabets[rletter]
         }
 
-        async function fGen(arg) {
+        function fGen(arg) {
             let fletter = arg.charAt(arg.length - 1);
-            await gameRef.update({
+            gameRef.update({
                 'letter': fletter
-            }).then(() => {
-                return fletter
             })
+            return fletter
         }
 
         const invalid = new Discord.MessageEmbed()
@@ -182,7 +181,7 @@ module.exports = {
                     const accWord = await new Discord.MessageEmbed()
                         .setColor('#86B543')
                         .setTitle('Good Job!')
-                        .setDescription(`Now write a word starting with letter \`${await fGen(arg)}\``)
+                        .setDescription(`Now write a word starting with letter \`${fGen(arg)}\``)
                         .addFields(
                             {
                                 name: `\nWord Count :`, value: `${gameD.count}`
