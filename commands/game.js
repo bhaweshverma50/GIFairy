@@ -17,30 +17,22 @@ module.exports = {
         const gameRef = db.collection(msg.guild.id).doc('game');
         const gameInfo = await gameRef.get();
         const gameData = gameInfo.data();
-        // console.log(args[0] === 'rs');
+
         function rGen() {
             let rletter = Math.floor(Math.random() * alphabets.length);
-            // letter = alphabets[rletter];
             gameRef.update({
                 'letter': alphabets[rletter]
             })
-            // console.log("rgen")
             return alphabets[rletter]
         }
 
-        function fGen(args) {
-            let fletter = args.charAt(args.length - 1);
-            // letter = fletter;
+        function fGen(arg) {
+            let fletter = arg.charAt(arg.length - 1);
             gameRef.update({
                 'letter': fletter
             })
-            // console.log("fgen")
             return fletter
         }
-        // var start = gameData.start
-        // let done = gameData.done
-        // let letter = gameData.letter
-        // let count = gameData.count
 
         const invalid = new Discord.MessageEmbed()
             .setColor('#BF2A37')
@@ -77,65 +69,79 @@ module.exports = {
 
         if (!args[0]) return await msg.channel.send(invalid);
 
-        // console.log(`Args: ${args[0].toLowerCase()}`)
-        args = args[0].toLowerCase()
-        exist = dict[args];
+        arg = args[0].toLowerCase()
+        exist = dict[arg];
 
-        if (!args[0]) return msg.channel.send(invalid)
-
-        if (args[0] === 'sd') {
-            if (args[1] === gameData.code) {
-                gameRef.update({
-                    'start': false
-                }).then(msg.channel.send("Shutdown!"))
-            } else msg.channel.send('Cannot stop the game without secret code!')
+        if (arg === '-stop') {
+            if (gameData.start) {
+                if (args[1] === gameData.code) {
+                    gameRef.update({
+                        'start': false,
+                        'done': [],
+                        'letter': null,
+                        'count': 0
+                    }).then(msg.channel.send("Game Stopped!"))
+                } else msg.channel.send('Invalid Sceret Code! Cannot stop the game without the correct secret code!')
+            } else msg.channel.send('No game to stop! To start the game use -start followed by secret code!')
         }
 
-        if (args[0] === 'rs') {
-            console.log("in");
+        else if (arg === '-start') {
+            if (!gameData.start) {
+                if (args[1] === gameData.code) {
+                    gameRef.update({
+                        'start': true
+                    })
+                    const gstart = new Discord.MessageEmbed()
+                        .setColor('#86B543')
+                        .setTitle('Game Started Successfully!')
+                        .setDescription(`Begin the word with letter \`${rGen()}\``)
+                        .setTimestamp()
+
+                    return await msg.channel.send(gstart);
+                } else msg.channel.send('Invalid Sceret Code! Cannot start the game without the correct secret code!')
+            } else msg.channel.send(starterr)
+        }
+
+        else if (arg === '-reset') {
             if (args[1] === gameData.code) {
                 gameRef.update({
                     'start': false,
-                    'code': args[0],
                     'done': [],
                     'letter': null,
                     'count': 0,
                     'highscore': 0
                 }).then(msg.channel.send("Reset!"))
-            } else msg.channel.send('Cannot reset the game without secret code!')
+            } else msg.channel.send('Invalid Secret Code! Cannot reset the game without the correct secret code!')
         }
 
-        if (args[0] === gameData.code) {
-            if (gameData.start) return msg.channel.send(starterr);
-            else {
-                gameRef.update({
-                    'start': true
-                })
-                // start = true
-                gameRef.update({
-                    'done': []
-                })
-                // done = []
-                gameRef.update({
-                    'count': 0
-                })
-                // count = 0
-                const gstart = new Discord.MessageEmbed()
-                    .setColor('#86B543')
-                    .setTitle('Game Started Successfully!')
-                    .setDescription(`Begin the word with letter \`${rGen()}\``)
-                    .setTimestamp()
+        // else if (arg === gameData.code) {
+        //     if (gameData.start) return msg.channel.send(starterr);
+        //     else {
+        //         gameRef.update({
+        //             'start': true
+        //         })
+        //         gameRef.update({
+        //             'done': []
+        //         })
+        //         gameRef.update({
+        //             'count': 0
+        //         })
+        //         const gstart = new Discord.MessageEmbed()
+        //             .setColor('#86B543')
+        //             .setTitle('Game Started Successfully!')
+        //             .setDescription(`Begin the word with letter \`${rGen()}\``)
+        //             .setTimestamp()
 
-                return await msg.channel.send(gstart);
-            }
-        }
+        //         return await msg.channel.send(gstart);
+        //     }
+        // }
 
         else if (!gameData.start) return await msg.channel.send(adminerr);
 
         else if (exist) {
 
-            check_letter = args.startsWith(gameData.letter);
-            check_include = gameData.done.includes(args);
+            check_letter = arg.startsWith(gameData.letter);
+            check_include = gameData.done.includes(arg);
 
             const naWord = new Discord.MessageEmbed()
                 .setColor('#BF2A37')
@@ -152,23 +158,38 @@ module.exports = {
             if (!check_letter) return await msg.channel.send(naWord);
             else if (check_include) return await msg.channel.send(avWord);
             else {
-                gameRef.update({
-                    done: admin.firestore.FieldValue.arrayUnion(args),
-                    count: admin.firestore.FieldValue.increment(1)
-                })
-                // done.push(args);
-                // count += 1
-                const accWord = new Discord.MessageEmbed()
-                    .setColor('#86B543')
-                    .setTitle('Good Job!')
-                    .setDescription(`Now write a word starting with letter \`${fGen(args)}\``)
-                    .addFields(
-                        {
-                            name: `\nWord Count :`, value: `${gameData.count}`
+                await gameRef.update({
+                    done: admin.firestore.FieldValue.arrayUnion(arg),
+                    count: admin.firestore.FieldValue.increment(1),
+                }).then(async () => {
+
+
+
+                    var gameIn = await gameRef.get();
+                    var gameD = gameIn.data();
+
+                    if (gameD.count > gameD.highscore) {
+
+                        await gameRef.update({
+                            highscore: admin.firestore.FieldValue.increment(1)
                         })
-                    .setFooter(`Highscore : ${gameData.highscore}`)
-                    .setTimestamp()
-                return await msg.channel.send(accWord);
+                    }
+
+                    gameIn = await gameRef.get();
+                    gameD = gameIn.data();
+
+                    const accWord = await new Discord.MessageEmbed()
+                        .setColor('#86B543')
+                        .setTitle('Good Job!')
+                        .setDescription(`Now write a word starting with letter \`${fGen(arg)}\``)
+                        .addFields(
+                            {
+                                name: `\nWord Count :`, value: `${gameD.count}`
+                            })
+                        .setFooter(`Highscore : ${gameD.highscore}`)
+                        .setTimestamp()
+                    return await msg.channel.send(accWord);
+                })
             }
         }
         else return await msg.channel.send(new Discord.MessageEmbed()
