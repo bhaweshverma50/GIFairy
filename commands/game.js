@@ -82,7 +82,7 @@ module.exports = {
         const stopErr = new Discord.MessageEmbed()
             .setColor('#BF2A37')
             .setTitle('No game to stop!')
-            .setDescription(`To start the game use \`-start\` followed by secret code!`)
+            .setDescription(`To start the game use \`${pfx}g -start [secret-code]\` followed by secret code!`)
 
         async function clearPrev() {
             const fetched = await msg.channel.messages.fetch({ limit: 1 });
