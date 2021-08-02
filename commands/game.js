@@ -30,8 +30,9 @@ module.exports = {
             let fletter = arg.charAt(arg.length - 1);
             await gameRef.update({
                 'letter': fletter
+            }).then(() => {
+                return fletter
             })
-            return fletter
         }
 
         const invalid = new Discord.MessageEmbed()
