@@ -144,6 +144,8 @@ module.exports = {
                     count: admin.firestore.FieldValue.increment(1),
                 }).then(async () => {
 
+                    var w = arg
+
                     var gameIn = await gameRef.get();
                     var gameD = gameIn.data();
 
@@ -157,12 +159,12 @@ module.exports = {
                     gameIn = await gameRef.get();
                     gameD = gameIn.data();
                     console.log('====================================');
-                    console.log(arg);
+                    console.log(w);
                     console.log('====================================');
                     const accWord = await new Discord.MessageEmbed()
                         .setColor('#86B543')
                         .setTitle('Good Job!')
-                        .setDescription(`Now write a word starting with letter \`${fGen(arg)}\``)
+                        .setDescription(`Now write a word starting with letter \`${fGen(w)}\``)
                         .addFields(
                             {
                                 name: `\nWord Count :`, value: `${gameD.count}`
