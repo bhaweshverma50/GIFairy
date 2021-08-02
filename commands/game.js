@@ -67,6 +67,30 @@ module.exports = {
             )
             .setTimestamp()
 
+        const stop = new Discord.MessageEmbed()
+            .setColor('#86B543')
+            .setDescription('Game Stopped Successfully 👍')
+
+        const reset = new Discord.MessageEmbed()
+            .setColor('#86B543')
+            .setDescription('Game reset Successfully 👍')
+
+        const invCode = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setDescription('Invalid Sceret Code 👎')
+
+        const stopErr = new Discord.MessageEmbed()
+            .setColor('#BF2A37')
+            .setTitle('No game to stop!')
+            .setDescription(`To start the game use \`-start\` followed by secret code!`)
+
+        async function clearPrev() {
+            const fetched = await msg.channel.messages.fetch({ limit: 1 });
+
+            msg.channel.bulkDelete(fetched)
+                .catch(err => console.log(err))
+        }
+
         if (!args[0]) return await msg.channel.send(invalid);
 
         arg = args[0].toLowerCase()
@@ -80,9 +104,15 @@ module.exports = {
                         'done': [],
                         'letter': null,
                         'count': 0
-                    }).then(msg.channel.send("Game Stopped!"))
-                } else msg.channel.send('Invalid Sceret Code! Cannot stop the game without the correct secret code!')
-            } else msg.channel.send('No game to stop! To start the game use -start followed by secret code!')
+                    }).then(() => {
+                        clearPrev()
+                        msg.channel.send(stop)
+                    })
+                } else msg.channel.send(invCode)
+            } else {
+                clearPrev()
+                msg.channel.send(stopErr)
+            }
         }
 
         else if (arg === '-start') {
@@ -96,10 +126,13 @@ module.exports = {
                         .setTitle('Game Started Successfully!')
                         .setDescription(`Begin the word with letter \`${rGen()}\``)
                         .setTimestamp()
-
+                    clearPrev()
                     return await msg.channel.send(gstart);
-                } else msg.channel.send('Invalid Sceret Code! Cannot start the game without the correct secret code!')
-            } else msg.channel.send(starterr)
+                } else msg.channel.send(invCode)
+            } else {
+                clearPrev()
+                msg.channel.send(starterr)
+            }
         }
 
         else if (arg === '-reset') {
@@ -110,8 +143,11 @@ module.exports = {
                     'letter': null,
                     'count': 0,
                     'highscore': 0
-                }).then(msg.channel.send("Reset!"))
-            } else msg.channel.send('Invalid Secret Code! Cannot reset the game without the correct secret code!')
+                }).then(() => {
+                    clearPrev()
+                    msg.channel.send(reset)
+                })
+            } else msg.channel.send(invCode)
         }
 
         else if (!gameData.start) return await msg.channel.send(adminerr);
