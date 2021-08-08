@@ -4,7 +4,8 @@
     "description": "Random GIF generator",
     "main": "server.js",
     "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
+        "dev": "nodemon index.js"
     },
     "author": "LaChico",
     "license": "ISC",
