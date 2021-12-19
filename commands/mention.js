@@ -10,7 +10,7 @@ module.exports = {
         .setDescription(`\`gfm\` has missing arguments.`);
       msg.channel.send(error);
     } else {
-      if (!isNaN(args[0]) && args[0] > 0) {
+      if (!isNaN(args[0]) && args[0] > 0 && args[0] < 11) {
         let count = args[0];
         let mentions = msg.mentions.users.map((user) => user.toString());
         let mention_count = mentions.length;
@@ -25,7 +25,9 @@ module.exports = {
         const error = new Discord.MessageEmbed()
           .setColor("#BF2A37")
           .setTitle("Oops!")
-          .setDescription(`\`${args[0]}\` is not a valid number.`);
+          .setDescription(
+            `\`${args[0]}\` is not a valid number. Enter number between 1 and 10.`
+          );
         msg.channel.send(error);
       }
       //   const ping = new Discord.MessageEmbed()
